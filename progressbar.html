@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> Progress Bar </title>
+
+	<style type="text/css">
+
+		body{
+
+			display: grid;
+			place-items: center;
+			height: 100vh;
+
+			background-color: black;
+			padding: 0;
+			margin:0;
+
+		}
+
+
+
+
+		.container1{
+
+			display: block;
+
+			background-color: #fff7f8;
+			
+			height: 100vh;
+			width: 100vw;
+
+		}
+
+		.box{
+			display: flex;
+			justify-content: center;
+			align-items: center;
+
+
+			position: absolute;
+			left: 35%;
+			top: 50%;
+			transform: translateY(-50%);
+
+
+		}
+
+		.freebox{
+
+
+			height: 200px;
+			width: 200px;
+			background: linear-gradient(45deg,steelblue,lightblue);
+
+			border-radius: 30px;
+			border: 3px solid violet;
+
+			color: white;
+			font-size: 20px;
+			text-align: center;
+			line-height:200px;
+
+
+			user-select: none;
+			cursor: pointer;
+
+			margin-right: 30px;
+
+		}
+
+		.freebox:hover{
+			border: 3px solid limegreen;
+		}
+
+
+
+		.paidbox{
+
+			height: 200px;
+			width: 200px;
+			background: linear-gradient(35deg,#fac23e,#ff630f);
+
+		
+			border-radius: 30px;
+			border: 3px solid violet;
+
+			color: white;
+			font-size: 20px;
+			text-align: center;
+			line-height:200px;
+
+			user-select: none;
+			cursor: pointer;
+
+		}
+
+		.paidbox:hover{
+			border: 3px solid red;
+		}
+
+
+		.container2{
+
+			
+			display: none;
+			background-color: white;
+			padding: 30px;
+
+			height: 230px;
+			width: 620px;
+
+			position: relative;
+
+		}
+
+
+		.progressbar-outside{
+
+			height: 20px;
+			width: 600px;
+
+			background-color: lightgray;
+
+			position: absolute;
+			left: 35px;
+			top: 40%;
+			transform: translateY(-40%);
+
+		}
+
+		.progressbar-inside{
+			width: 0%;
+			display: none;
+			height: 20px;
+			background-color: forestgreen;
+
+			position: relative;
+
+		}
+
+		.progressbar-inside::after{
+			content: attr(num-incre);
+			color: white;
+			font-size: 16px;
+
+			position: absolute;
+			right: 6px;
+			top: 0;
+
+		}
+
+
+		.btn{
+
+			background:linear-gradient(30deg,lightblue,steelblue);
+			box-shadow: 5px 5px 10px gray;
+			border:none;
+			border-radius: 18px;
+			padding: 10px 30px;
+			color: white;
+			cursor: pointer;
+
+			margin-top: 50px;
+
+			position: absolute;
+			left: 50%;
+			transform: translateX(-80%);
+			top: 40%;
+
+
+
+		}
+			
+		
+	</style>
+</head>
+<body>
+
+
+	<div class="container1">
+		
+		<div class="box">
+			<div class="freebox"> Free Download </div>
+			<div class="paidbox"> Premium Download </div>
+			
+		</div>
+		
+	</div>
+
+
+	<div class="container2">
+
+		<div class="progressbar-outside">
+			<div class="progressbar-inside" num-incre="0%"></div>
+		</div>
+
+		<button type="button" class="btn "> Click </button>
+		
+
+	</div>
+
+
+	
+	<script type="text/javascript">
+
+		var container1 = document.querySelector(".container1");
+		var freebox = document.querySelector(".freebox");
+		var paidbox = document.querySelector(".paidbox");
+
+		var container2 = document.querySelector(".container2");
+		var btn = document.querySelector(".btn");
+		var progressbar = document.querySelector(".progressbar-inside");
+
+		var setWidth = 0;
+
+
+
+		freebox.addEventListener("click",function(){
+			container1.style.display = "none";
+			container2.style.display = "block";
+			freebox.classList.toggle("slow");
+
+		});
+
+		paidbox.addEventListener("click",function(){
+			container1.style.display = "none";
+			container2.style.display = "block";
+			paidbox.classList.toggle("fast");
+		});
+
+	
+		btn.addEventListener("click",function(){
+
+				setTimeout(btneffectoff,10);
+				setTimeout(btneffecton,200);
+
+			 	
+			 	if(freebox.classList.contains("slow")){
+			 		var setIncre = setInterval(widthIncre,3000);
+			 	}else if(paidbox.classList.contains("fast")){
+			 		var setIncre = setInterval(widthIncre,100);
+			 	}else{
+			 		document.write("Choose One");
+			 	}
+
+
+				function widthIncre(){
+
+						if(setWidth >= 100){
+
+							clearInterval(setIncre );
+							setWidth = 0;
+							window.location.href = "https://youtu.be/I3SO67kpuOA";
+							
+						}else{
+
+							if (freebox.classList.contains("slow")){
+								setWidth = setWidth + 4;
+								progressbar.style.width = `${setWidth}%`;
+								progressbar.style.display = "block";
+								progressbar.setAttribute("num-incre",`${setWidth}%`);
+
+							}else{
+								setWidth++;
+							progressbar.style.width = `${setWidth}%`;
+							progressbar.style.display = "block";
+							progressbar.setAttribute("num-incre",`${setWidth}%`);
+
+							}
+							
+								
+						}
+					
+				}
+
+				btn.disabled = true ;
+
+
+
+
+
+
+
+		});
+
+
+
+		function btneffectoff(){
+
+				container2.style.boxShadow = "12px 14px 1px lightgray";
+				container2.style.backgroundColor = "#edfafa";
+				btn.style.boxShadow = "none";
+				btn.style.linearGradient = "30deg,steelblue,lightblue";
+
+		}
+
+
+		function btneffecton(){
+				container2.style.boxShadow = "none";
+				container2.style.backgroundColor = "white";
+				btn.style.boxShadow = "5px 5px 10px gray";
+				btn.style.linearGradient = "30deg,lightblue,steelblue";
+		}
+
+
+
+		 
+	</script>
+		
+		
+
+</body>
+</html>
